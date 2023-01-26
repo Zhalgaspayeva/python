@@ -1,2 +1,4 @@
-if 5 > 2:
-  print("Five is greater than two!")
+x = "Python"
+y = "is"
+z = "awesome"
+print(x, y, z)

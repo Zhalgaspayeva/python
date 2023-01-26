@@ -1,4 +1,8 @@
-x = 5
-y = "John"
-print(type(x))
-print(type(y))
+x = "awesome"
+
+def myfunc():
+  print("Python is " + x)
+
+myfunc()
+
+#как вызывается функция

@@ -1,4 +1,4 @@
 x = 5
-y = "KBTU"
-print(x)
-print(y)
+y = "John"
+print(x, y)
+# разные типы данных
