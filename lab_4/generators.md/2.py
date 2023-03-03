@@ -1,9 +1,17 @@
-def even_numbers(n):
-    for i in range(1, n + 1):
-        if (i % 2 == 0):
-            yield i
+class Squares():
+    def __init__(self,end):
+        self.current = 2
+        self.end_point = end
+    
+    def __iter__(self):
+        return self
 
+    def __next__(self):
+        if self.current > self.end_point:
+            raise StopIteration()
+        self.current += 1 + (self.current % 2 == 0)
+        return (self.current)
+n = int(input())
+print(*Squares(n), sep=', ')
 
-second_num = int(input())
-for i in even_numbers(second_num):
-    print(i, end=" ")
+# print(*Squares(n), sep = ', ')
