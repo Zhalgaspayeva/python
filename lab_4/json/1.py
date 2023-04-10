@@ -1,7 +1,7 @@
 import json
 
-with open('sample-date.json', 'r') as my_json:
-   a = json.load(my_json)
+wit = open('sample-date.json')
+a = json.load(wit)
 
 # jsondata = open('sample-date.json', 'r')
 # a = json.loads(jsondata)
@@ -10,7 +10,7 @@ print('Interface Status')
 print('=' * 80)
 
 names = ['DN', 'Description', 'Speed', 'MTU']
-form = "{:<47}  {:<15}  {:<10}  {:<6}"
+form = "{:>47}  {:<15}  {:<10}  {:<6}"
 print(form.format(*names))
 print('-' * 47 + '  ' + '-' * 15 + '  ' + '-' * 10 + '  ' + '-' * 6)
 

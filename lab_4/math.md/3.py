@@ -9,7 +9,7 @@ def polygon_area(sides, length):
     perimeter = sides * length
     length /= 2
     degree_polygon = 360 / (sides * 2)
-    a = math.cos(degree_polygon) * length / math.sin(degree_polygon)
+    a = math.cos(degree_polygon) * length / math.sin(degree_polygon) # апофема
     area = (a * length) / 2
     return sides * area
 

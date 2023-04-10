@@ -1,7 +1,7 @@
 # os модуль
 import os 
 
-path = os.getcwd()
+path = os.getcwd() # текущая папка
 dirs = os.listdir(path)
 for i in dirs:
     if os.path.isdir(i):
