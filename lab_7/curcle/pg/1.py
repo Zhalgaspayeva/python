@@ -1,10 +1,12 @@
 import pygame as pg
 
 pg.init()
+
+# создаю экран
 screen = pg.display.set_mode((800,800))
 screen.fill((255,255,255))
 x = y = 400
-pg.display.flip()
+pg.display.flip() # обновляет экран
 
 while 1:
     for event in pg.event.get():
@@ -27,7 +29,6 @@ while 1:
         y = 25
     if y > 800 - 25:
         y = 800 - 25
-
 
     screen.fill((255,255,255)) # фон будет белым
     pg.draw.circle(surface=screen,color=(0,0,0), center=(x,y), radius=25)

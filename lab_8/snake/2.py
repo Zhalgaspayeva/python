@@ -32,6 +32,7 @@ class Snake(pg.sprite.Sprite):
         if head_rect.collideobjects([apple]):
             apple.color = choice(['yellow', 'brown', 'orange'])
             self.body.append((self.body[-1][0] - 5000 * dx, self.body[-1][1] - 5000 * dy))
+            #self.body.append((self.body[-1][0] - 5000 * dx, self.body[-1][1] - 5000 * dy))
             return True
         return False
 

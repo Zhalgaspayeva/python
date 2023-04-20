@@ -64,7 +64,7 @@ class Coin(pg.sprite.Sprite):
         self.rect.x = randint(0, 350)
 
 font = pg.font.Font(None, 50)
-cnt = 5
+cnt = 0
 
 # class instances (экземпляры классов)
 player = Player()
@@ -99,7 +99,7 @@ while 1:
         pg.quit()
     # collision with a coin (столкновение с монетой)
     if coin.rect.collideobjects([player]):
-        cnt += 1
+        cnt += randint(1,5)
         coin.new_coordinates()
         if(cnt == 10):
             STEP_ENEMY += 10
