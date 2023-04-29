@@ -7,7 +7,7 @@ screen.fill('white')
 # Загрузил картинку своей менюшки
 menu = pg.image.load('assets/menu_bar3.png')
 # Поменял размер этой картинки
-menu = pg.transform.scale(menu, (200, 500))
+menu = pg.transform.scale(menu, (100, 800))
 
 # Class Button - нужен для того, чтобы мы создавали кнопки на экране и могли их выбрать
 class Button(pg.sprite.Sprite):
@@ -92,6 +92,12 @@ def drawCircle(surface, color, x, y, x1, y1, size):
 
     pg.draw.ellipse(surface, color, [x, y, abs(x1 - x), abs(y - y1)], size)
 
+def drawTriangle(surface, color, x, y, x1, y1, size):
+    first_point = ((x1 + x) // 2, y)
+    second_point = (x, y1)
+    third_point = (x1, y1)
+    pg.draw.polygon(surface, color, [first_point, second_point, third_point], size)
+
 def drawRightTriangle(surface, color, x, y, x1, y1, size):
     first_point = (x, y)
     second_point = (x, y1)
@@ -114,24 +120,27 @@ brush = Button(5, 5, 'brush.png')
 draw_rect = Button(55, 5, 'rect.png')
 draw_circle = Button(5, 55, 'circle.png')
 eraser = Button(55, 55, 'eraser.png')
+triangle = Button(5, 205, 'right_triangle.png')
+right_triangle = Button(55, 205, 'triangle.jpg')
 # Создаю кнопки цветов
 red_color = Button(5, 105, 'red.png')
 black_color = Button(55, 105, 'black.png')
 blue_color = Button(5, 155, 'blue.png')
-yellow_color = Button(55, 155, 'yellow.png')
+green_color = Button(55, 155, 'yellow.png')
 # Создал группу кнопок, которая отвечает за инструменты
 all_buttons = pg.sprite.Group()
 all_buttons.add(brush, draw_rect)
 all_buttons.add(draw_circle)
 all_buttons.add(eraser)
-#all_buttons.add(right_triangle)
+all_buttons.add(triangle)
+all_buttons.add(right_triangle)
 
 # Создаю группу спрайтов, которая отвечает за кнопки цветов
 colors = pg.sprite.Group()
 colors.add(red_color)
 colors.add(black_color)
 colors.add(blue_color)
-colors.add(yellow_color)
+colors.add(green_color)
 
 # Нужно чтобы по началу цвет был черным
 black_color.make_selected('black_selected.png', colors)
@@ -147,6 +156,29 @@ while 1:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
+        if event.type == pg.MOUSEMOTION:
+            if brush.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif draw_rect.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif draw_circle.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif eraser.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif red_color.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif black_color.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif blue_color.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif green_color.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif triangle.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            elif right_triangle.rect.collidepoint(event.pos):
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
+            else:
+                pg.mouse.set_cursor(pg.SYSTEM_CURSOR_ARROW)
         if event.type == pg.MOUSEBUTTONDOWN: 
             if brush.rect.collidepoint(event.pos):
                 brush.make_selected('brush_selected.png', all_buttons)
@@ -165,9 +197,13 @@ while 1:
             if blue_color.rect.collidepoint(event.pos):
                 blue_color.make_selected('blue_selected.png', colors)
                 color = 'blue'
-            if yellow_color.rect.collidepoint(event.pos):
-                yellow_color.make_selected('yellow_selected.png', colors)
+            if green_color.rect.collidepoint(event.pos):
+                green_color.make_selected('yellow_selected.png', colors)
                 color = 'yellow'
+            if triangle.rect.collidepoint(event.pos):
+                triangle.make_selected('right_triangle_selected.jpeg', all_buttons)
+            if right_triangle.rect.collidepoint(event.pos):
+                right_triangle.make_selected('triangle_selected.png', all_buttons)
             last_pos = event.pos
             is_drawing = True
 
@@ -188,6 +224,12 @@ while 1:
         elif eraser.is_selected:
             if is_drawing and event.type == pg.MOUSEMOTION:
                 drawLine(screen, last_pos, event.pos, 20, 'white')
+        elif triangle.is_selected:
+            if event.type == pg.MOUSEBUTTONUP:
+                drawTriangle(screen, color, *last_pos, *event.pos, 5)
+        elif right_triangle.is_selected:
+            if event.type == pg.MOUSEBUTTONUP:
+                drawRightTriangle(screen, color, *last_pos, *event.pos, 5)
     screen.blit(menu, (0, 0))
     colors.update()
     all_buttons.update()
